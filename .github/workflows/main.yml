@@ -1,0 +1,28 @@
+name: Java CI with Maven
+
+# Builds and tests on pushes, pull requests, and manual runs.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build and run the tests
+        run: mvn --batch-mode --no-transfer-progress verify
